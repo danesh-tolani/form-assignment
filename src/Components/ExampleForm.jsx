@@ -1,141 +1,105 @@
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
+import { Button } from "@mui/material";
+
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
-import { object, string, number, date, InferType, bool } from "yup";
+import { object, string, number, date, InferType, bool, ref } from "yup";
+import { useContext } from "react";
+import { Context } from "../context";
+
+function formatDate(date) {
+  return new Date(date).toLocaleDateString();
+}
 
 const schema = object().shape({
-  firstName: string().required(),
+  FirstName: string().required(),
+  middleName: string().required(),
   lastName: string().required(),
-  username: string().required(),
-  city: string().required(),
-  state: string().required(),
-  zip: string().required(),
-  terms: bool().required().oneOf([true], "Terms must be accepted"),
+  mobileNo: string().required(),
+  email: string().required(),
+  birthday: date()
+    .min(ref("originalEndDate"), ({ min }) => `Date needs to be before ${formatDate(min)}!!`)
+    .required(),
+  age: string().required(),
+  bloodGroup: string().required(),
+  height: string().required(),
+  weight: string().required(),
+  gender: string().required(),
+  maritalStatus: string().required(),
 });
 
-const FormExample = () => {
+const FormExample = ({ page, setPage, setFormValues }) => {
+  let globalValues = useContext(Context);
+  // console.log(globalValues);
+
+  const onSubmit = (values) => {
+    // console.log("form data", values);
+    setPage(1);
+    // navigate.push("/NextPage")
+  };
+
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={console.log}
-      initialValues={{
-        firstName: "Mark",
-        lastName: "Otto",
-        username: "",
-        city: "",
-        state: "",
-        zip: "",
-        terms: false,
-      }}>
+      // onSubmit={console.log("lol")}
+      initialValues={{ ...globalValues }}>
       {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
         <Form
           noValidate
-          onSubmit={handleSubmit}>
-          <div className="mb-3 row">
+          onSubmit={(e) => {
+            // console.log("isValid", isValid);
+            e.preventDefault();
+            // onSubmit(values);
+          }}>
+          {/* Row 1 */}
+          <Row className="mb-3 row">
             <Form.Group
               className="col-lg"
               as={Col}
               md="4"
               controlId="validationFormik01">
-              <Form.Label>First name</Form.Label>
+              {/* <Form.Label>First name</Form.Label> */}
               <Form.Control
                 type="text"
-                name="firstName"
-                value={values.firstName}
+                name="FirstName"
+                value={values.FirstName}
                 onChange={handleChange}
-                isValid={touched.firstName && !errors.firstName}
+                isValid={!!errors.FirstName}
+                placeholder="First Name"
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{errors.FirstName}</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group
-              className="col-lg"
-              as={Col}
-              md="4"
-              controlId="validationFormik02">
-              <Form.Label>Last name</Form.Label>
-              <Form.Control
-                type="text"
-                name="lastName"
-                value={values.lastName}
-                onChange={handleChange}
-                isValid={touched.lastName && !errors.lastName}
-              />
+          </Row>
 
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-          </div>
-          <div className="mb-3">
-            <Form.Group
-              as={Col}
-              md="4"
-              controlId="validationFormikUsername">
-              <Form.Label>Username</Form.Label>
-              <InputGroup hasValidation>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  aria-describedby="inputGroupPrepend"
-                  name="username"
-                  value={values.username}
-                  onChange={handleChange}
-                  isInvalid={!!errors.username}
-                />
-                <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-          </div>
-          <div className="mb-3">
-            <Form.Group
-              as={Col}
-              md="6"
-              controlId="validationFormik03">
-              <Form.Label>City</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="City"
-                name="city"
-                value={values.city}
-                onChange={handleChange}
-                isInvalid={!!errors.city}
-              />
-
-              <Form.Control.Feedback type="invalid">{errors.city}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              md="3"
-              controlId="validationFormik04">
-              <Form.Label>State</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="State"
-                name="state"
-                value={values.state}
-                onChange={handleChange}
-                isInvalid={!!errors.state}
-              />
-              <Form.Control.Feedback type="invalid">{errors.state}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              md="3"
-              controlId="validationFormik05">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Zip"
-                name="zip"
-                value={values.zip}
-                onChange={handleChange}
-                isInvalid={!!errors.zip}
-              />
-
-              <Form.Control.Feedback type="invalid">{errors.zip}</Form.Control.Feedback>
-            </Form.Group>
+          {/* Buttons */}
+          <div className="d-flex justify-content-between justify-content-lg-start gap-2">
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={page === 0 ? true : false}
+              onClick={() => {
+                // globalValues = { ...values };
+                setFormValues({ ...values });
+                setPage((page) => page - 1);
+                // console.log("global values: ", globalValues);
+              }}>
+              BACK
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              className=""
+              disabled={page === 2 ? true : false}
+              onClick={() => {
+                setFormValues({ ...values });
+                // setPage((page) => page + 1);
+                // console.log("global values: ", globalValues);
+              }}>
+              NEXT
+            </Button>
           </div>
         </Form>
       )}
