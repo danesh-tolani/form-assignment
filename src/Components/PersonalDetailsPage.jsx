@@ -17,7 +17,7 @@ const schema = object().shape({
   firstName: string().required("FirstName is a required field"),
   middleName: string().required("MiddleName is a required field"),
   lastName: string().required("LastName is a required field"),
-  mobileNo: number().typeError("This field should be a number").required("MobileNo is a required field"),
+  mobileNo: number().typeError("This field should be a number").min(10, "Mobile No Should be at least 10 characters").required("MobileNo is a required field"),
   email: string().email("Please enter a correct email").required("Email is a required field"),
   age: number().typeError("This field should be a number").required("Age is a required field"),
   bloodGroup: string().required("BloodGroup is a required field"),
@@ -54,7 +54,7 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
           noValidate
           onSubmit={handleSubmit}>
           {/* Row 1 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
@@ -84,7 +84,7 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
           </Row>
 
           {/* Row 2 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
@@ -114,7 +114,7 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
           </Row>
 
           {/* Row 3 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
@@ -157,7 +157,7 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
           </Row>
 
           {/* Row 4 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
@@ -192,7 +192,7 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
           </Row>
 
           {/* Row 5 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
@@ -222,7 +222,7 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
           </Row>
 
           {/* Row 6 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"

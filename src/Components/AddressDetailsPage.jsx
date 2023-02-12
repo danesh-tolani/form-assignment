@@ -33,7 +33,7 @@ const AddressDetailsPage = ({ page, setPage, setFormValues }) => {
           noValidate
           onSubmit={handleSubmit}>
           {/* Row 1 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
@@ -63,7 +63,7 @@ const AddressDetailsPage = ({ page, setPage, setFormValues }) => {
           </Row>
 
           {/* Row 2 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
@@ -103,7 +103,7 @@ const AddressDetailsPage = ({ page, setPage, setFormValues }) => {
           </Row>
 
           {/* Row 3 */}
-          <Row className="mb-3 gap-3 gap-lg-0">
+          <Row className="mb-3 gap-3 gap-md-0">
             <Form.Group
               as={Col}
               md="6"
