@@ -1,13 +1,9 @@
+import { Button } from "@mui/material";
 import React, { useContext } from "react";
 import { Context } from "../context";
 
-const DisplayPage = () => {
+const DataDisplayPage = ({ page, setPage }) => {
   let globalValues = useContext(Context);
-  console.log(Object.keys(globalValues));
-
-  //   for (const key in globalValues) {
-  //     console.log(key);
-  //   }
 
   return (
     <div>
@@ -17,15 +13,22 @@ const DisplayPage = () => {
           return (
             <>
               <div className="row border-bottom border-dark align-items-center mx-2">
-                <p className="col my-auto py-2 ">{field}</p>
+                <p className="col my-auto py-2 ">{field.charAt(0).toUpperCase() + field.slice(1)}</p>
                 <p className="col my-auto py-2">{globalValues[`${field}`]}</p>
               </div>
             </>
           );
         })}
       </div>
+      <Button
+        variant="contained"
+        className="mt-4"
+        disabled={page === 0 ? true : false}
+        onClick={() => setPage((page) => page - 1)}>
+        BACK
+      </Button>
     </div>
   );
 };
 
-export default DisplayPage;
+export default DataDisplayPage;

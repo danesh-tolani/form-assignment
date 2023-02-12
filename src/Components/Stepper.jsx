@@ -7,15 +7,16 @@ import StepLabel from "@mui/material/StepLabel";
 const steps = ["USER INFORMATION", "ADDRESS DETAILS", "Thank You"];
 
 const StepperComponent = ({ step }) => {
-  //   console.log(typeof step, step);
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box className="w-100 pt-3">
       <Stepper
         activeStep={step}
         alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+            <StepLabel>
+              <p className="small">{label}</p>
+            </StepLabel>
           </Step>
         ))}
       </Stepper>
