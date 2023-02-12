@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import StepperComponent from "./Components/Stepper";
 import { Context } from "./context";
+import StepperComponent from "./Components/Stepper";
 import DataDisplayPage from "./Components/DataDisplayPage";
 import PersonalDetailsPage from "./Components/PersonalDetailsPage";
 import AddressDetailsPage from "./Components/AddressDetailsPage";
