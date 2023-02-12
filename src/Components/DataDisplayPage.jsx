@@ -9,14 +9,14 @@ const DataDisplayPage = ({ page, setPage }) => {
     <div>
       <h1 className="text-success py-4">Data added Successfully</h1>
       <div>
-        {Object.keys(globalValues).map((field) => {
+        {Object.keys(globalValues).map((field, index) => {
           return (
-            <>
-              <div className="row border-bottom border-dark align-items-center mx-2">
-                <p className="col my-auto py-2 ">{field.charAt(0).toUpperCase() + field.slice(1)}</p>
-                <p className="col my-auto py-2">{globalValues[`${field}`]}</p>
-              </div>
-            </>
+            <div
+              className="row border-bottom border-dark align-items-center mx-2 "
+              key={index}>
+              <p className="col my-auto py-2 ">{field.charAt(0).toUpperCase() + field.slice(1)}</p>
+              <p className="col my-auto py-2">{globalValues[`${field}`]}</p>
+            </div>
           );
         })}
       </div>

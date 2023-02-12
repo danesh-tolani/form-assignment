@@ -8,21 +8,21 @@ import AddressDetailsPage from "./Components/AddressDetailsPage";
 
 function App() {
   const initialValues = {
-    name: "",
+    name: "Value",
     firstName: "",
     middleName: "",
     lastName: "",
     mobileNo: "",
     email: "",
-    birthDay: "",
+    birthday: "",
     age: "",
     bloodGroup: "",
     height: "",
     weight: "",
     gender: "",
     maritalStatus: "",
-    addressLineOne: "",
-    addressLineTwo: "",
+    addressLine1: "",
+    addressLine2: "",
     city: "",
     state: "",
     country: "",
@@ -32,17 +32,15 @@ function App() {
   const [page, setPage] = useState(0);
   const [formValues, setFormValues] = useState(initialValues);
 
-  console.log("FormValues: ", formValues);
-
   return (
     <Context.Provider value={formValues}>
-      <div className="App d-flex justify-content-center align-items-center  bg-dark bg-opacity-25 p-lg-5 p-3">
-        <div className=" h-100 w-100 px-lg-5 px-2 py-lg-4 py-2 bg-light">
+      <div className="App d-flex justify-content-center align-items-center  bg-dark bg-opacity-25 p-lg-5 p-3 swiper">
+        <div className=" h-100 w-100 px-lg-5 px-2 py-lg-4 py-2 bg-light swiper-wrapper">
           <StepperComponent step={page} />
-
           {/* FORM PAGES */}
           {page === 0 && (
             <PersonalDetailsPage
+              className="swiper-slide slide_1"
               page={page}
               setPage={setPage}
               setFormValues={setFormValues}
@@ -50,6 +48,7 @@ function App() {
           )}
           {page === 1 && (
             <AddressDetailsPage
+              className="swiper-slide slide_2"
               page={page}
               setPage={setPage}
               setFormValues={setFormValues}
@@ -57,6 +56,7 @@ function App() {
           )}
           {page === 2 && (
             <DataDisplayPage
+              className="swiper-slide slide_3"
               page={page}
               setPage={setPage}
             />

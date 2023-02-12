@@ -2,19 +2,19 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 import TextField from "@mui/material/TextField";
 import { Button, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { Context } from "../context";
 
 const schema = object().shape({
-  addressLineOne: string().required("AddressLine1 is a required field"),
-  addressLineTwo: string().required("AddressLine2 is a required field"),
+  addressLine1: string().required("AddressLine1 is a required field"),
+  addressLine2: string().required("AddressLine2 is a required field"),
   city: string().required("City is a required field"),
   state: string().required("State is a required field"),
   country: string().required("Country is a required field"),
-  pinCode: string().required("Pin Code is a required field"),
+  pinCode: number().typeError("This field should be a number").required("Pin Code is a required field"),
 });
 
 const AddressDetailsPage = ({ page, setPage, setFormValues }) => {
@@ -41,10 +41,10 @@ const AddressDetailsPage = ({ page, setPage, setFormValues }) => {
               <TextField
                 className="w-100"
                 label="Address Line 1"
-                name="addressLineOne"
-                value={values.addressLineOne}
-                error={!!errors.addressLineOne}
-                helperText={errors.addressLineOne}
+                name="addressLine1"
+                value={values.addressLine1}
+                error={!!errors.addressLine1}
+                helperText={errors.addressLine1}
                 onChange={handleChange}></TextField>
             </Form.Group>
             <Form.Group
@@ -54,10 +54,10 @@ const AddressDetailsPage = ({ page, setPage, setFormValues }) => {
               <TextField
                 className="w-100"
                 label="Address Line 2"
-                name="addressLineTwo"
-                value={values.addressLineTwo}
-                error={!!errors.addressLineTwo}
-                helperText={errors.addressLineTwo}
+                name="addressLine2"
+                value={values.addressLine2}
+                error={!!errors.addressLine2}
+                helperText={errors.addressLine2}
                 onChange={handleChange}></TextField>
             </Form.Group>
           </Row>

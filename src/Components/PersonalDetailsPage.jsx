@@ -11,32 +11,42 @@ import { FormControl, FormControlLabel, FormHelperText, FormLabel, MenuItem, Rad
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Context } from "../context";
+import moment from "moment/moment";
 
 const schema = object().shape({
   firstName: string().required("FirstName is a required field"),
   middleName: string().required("MiddleName is a required field"),
   lastName: string().required("LastName is a required field"),
-  mobileNo: string().required("MobileNo is a required field"),
-  email: string().required("Email is a required field"),
-  // birthday: string().required("Birthday is a required field"),
-  age: string().required("Age is a required field"),
-  bloodGroup: string().required("Blood group is a required field"),
-  height: string().required("Height is a required field"),
-  weight: string().required("Weight is a required field"),
-  gender: string().required("Please select your Gender"),
-  maritalStatus: string().required("Please select your Marital Status"),
+  mobileNo: number().typeError("This field should be a number").required("MobileNo is a required field"),
+  email: string().email("Please enter a correct email").required("Email is a required field"),
+  age: number().typeError("This field should be a number").required("Age is a required field"),
+  bloodGroup: string().required("BloodGroup is a required field"),
+  height: number().typeError("This field should be a number").required("Height is a required field"),
+  weight: number().typeError("This field should be a number").required("Weight is a required field"),
+  gender: string().required("Please Select your Gender"),
+  maritalStatus: string().required("Please Select Marital Status"),
 });
 
 const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
   let globalValues = useContext(Context);
+  const [dateValue, setDateValue] = useState(null);
 
   return (
     <Formik
       validationSchema={schema}
       onSubmit={(values) => {
-        setFormValues(values);
+        if (dateValue !== null) {
+          // convert date from Datepicker to required format
+          const date = dateValue?.$d;
+          const momentDate = moment(date, "ddd MMM DD YYYY HH:mm:ss ZZ");
+          let formattedDate = momentDate.format("DD-MM-YYYY");
 
-        setPage((page) => page + 1);
+          // setting form values
+          setFormValues({ ...values, birthday: formattedDate });
+
+          // changing page
+          setPage((page) => page + 1);
+        }
       }}
       initialValues={globalValues}>
       {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
@@ -118,7 +128,7 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
                 helperText={errors.email}
                 onChange={handleChange}></TextField>
             </Form.Group>
-            {/* <Form.Group
+            <Form.Group
               as={Col}
               md="6"
               controlId="validationFormik03">
@@ -126,29 +136,24 @@ const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
                 <DatePicker
                   label="Birthday"
                   name="birthday"
-                  value={datevalue}
                   onChange={(newValue) => {
                     setDateValue(newValue);
                   }}
-                  // error={!!errors.birthday}
-                  // error={true}
-                  // helperText={errors.email}
-                  // isInvalid={!!errors.birthday}
+                  value={dateValue}
+                  isValid={dateValue !== null}
                   className="w-100"
-                  renderInput={(params) => {
-                    console.log("lol", params.error);
+                  renderInput={(props) => {
                     return (
                       <TextField
-                        {...params}
-                        error={!!errors.birthday}
-                        helperText={errors.birthday}
+                        {...props}
+                        error={dateValue === null && touched.birthday}
                       />
                     );
                   }}
                 />
               </LocalizationProvider>
-              <Form.Control.Feedback type="invalid">{errors.birthday}</Form.Control.Feedback>
-            </Form.Group> */}
+              {touched.birthday && dateValue === null && <FormHelperText error>Birthday is a required field</FormHelperText>}
+            </Form.Group>
           </Row>
 
           {/* Row 4 */}
