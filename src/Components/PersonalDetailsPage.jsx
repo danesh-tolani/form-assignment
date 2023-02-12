@@ -27,24 +27,13 @@ const schema = object().shape({
   maritalStatus: string().required("Please select your Marital Status"),
 });
 
-const PersonalDetailsPage = ({ page, setPage, setFormValues, formValues }) => {
+const PersonalDetailsPage = ({ page, setPage, setFormValues }) => {
   let globalValues = useContext(Context);
-
-  // const [datevalue, setDateValue] = useState(null);
-
-  // const [maritalStatus, setMaritalStatus] = useState("");
-  // console.log(value);
 
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(values, actions) => {
-        // setTimeout(() => {
-        //   alert(JSON.stringify(values, null, 2));
-        //   actions.setSubmitting(false);
-        // }, 10);
-        // console.log("values:", values);
-
+      onSubmit={(values) => {
         setFormValues(values);
 
         setPage((page) => page + 1);

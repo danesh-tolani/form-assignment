@@ -23,12 +23,7 @@ const AddressDetailsPage = ({ page, setPage, setFormValues }) => {
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 10);
-        console.log(values);
+      onSubmit={(values) => {
         setPage((page) => page + 1);
         setFormValues({ ...globalValues, ...values });
       }}

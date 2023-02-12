@@ -46,7 +46,6 @@ function App() {
               page={page}
               setPage={setPage}
               setFormValues={setFormValues}
-              formValues={formValues}
             />
           )}
           {page === 1 && (
